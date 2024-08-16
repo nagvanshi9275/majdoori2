@@ -18,13 +18,13 @@ import Footer from "./Footer"
 
 
 
-export default function Page(){
+export default function Page({useremail}){
 
      return(
 
         <div>
 
-        <HeroSection/>
+        <HeroSection useremail={useremail}/>
 
         <FeaturesSection/>      
      

@@ -4,6 +4,8 @@ import React from 'react';
 import { Box, Container, Grid, Typography, Button, useTheme, useMediaQuery, Card, CardContent, CardMedia } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import { useNavigate } from 'react-router-dom';
+
 const HeroContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -73,14 +75,30 @@ const professions = [
   },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({useremail}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
+  const navigate = useNavigate();
+
+ // const useremal = useremail;
+
      function Click() {
 
-     console.log("Click")
+   //  console.log(useremail)
+
+     if(useremail != undefined){
+
+      navigate('/post')
+
+     }else{
+
+      navigate('/register')
+
+
+
+     }
 
 
       
@@ -164,7 +182,6 @@ export default function HeroSection() {
     </HeroContainer>
   );
 }
-
 
 
 

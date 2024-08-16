@@ -1,7 +1,6 @@
 
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Client, Account, ID } from 'appwrite';
 import {
   Box,
@@ -14,7 +13,7 @@ import {
   Avatar
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useNavigate } from 'react-router-dom'; // Correct import
+import { useNavigate } from 'react-router-dom';
 
 // Initialize Appwrite Client
 const client = new Client();
@@ -32,19 +31,38 @@ export default function Signup() {
   const [name, setName] = useState('');
   const [show, setShow] = useState(false);
 
-  const navigate = useNavigate(); // Correct usage
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkSession();
+  }, []);
+
+  async function checkSession() {
+    try {
+      const user = await account.get();
+      setLoggedInUser(user);
+      setShow(true);
+    } catch (error) {
+      console.log('No active session');
+    }
+  }
 
   // Handle user login
   async function login(email, password) {
     try {
-      await account.createEmailPasswordSession(email, password);
+      await account.createEmailSession(email, password);
       const user = await account.get();
       setLoggedInUser(user);
       setShow(true);
-      navigate('/'); // Navigate after login
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
-      alert('Failed to log in. Please check your credentials.');
+      if (error.type === 'user_already_logged_in') {
+        alert('You are already logged in.');
+        checkSession();
+      } else {
+        alert('Failed to log in. Please check your credentials.');
+      }
     }
   }
 
@@ -52,11 +70,7 @@ export default function Signup() {
   async function register() {
     try {
       await account.create(ID.unique(), email, password, name);
-      login(email, password); // Automatically log in the user after registration
-      
-      navigate('/'); 
-
-
+      login(email, password);
     } catch (error) {
       console.error('Registration error:', error);
       alert('Failed to register. Please check your details.');
@@ -68,6 +82,7 @@ export default function Signup() {
     try {
       await account.deleteSession('current');
       setLoggedInUser(null);
+      setShow(false);
     } catch (error) {
       console.error('Logout error:', error);
       alert('Failed to log out.');
@@ -85,82 +100,79 @@ export default function Signup() {
             {loggedInUser ? `Welcome, ${loggedInUser.name}` : 'Sign in / Register'}
           </Typography>
         </Grid>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={() => login(email, password)}
-          >
-            Login
-          </Button>
-          <Button
-            fullWidth
-            variant="outlined"
-            color="secondary"
-            sx={{ mt: 1, mb: 2 }}
-            onClick={register}
-          >
-            Register
-          </Button>
-          {loggedInUser && (
+        {!loggedInUser ? (
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Button
               fullWidth
               variant="contained"
-              color="error"
-              sx={{ mt: 1 }}
-              onClick={logout}
+              color="primary"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => login(email, password)}
             >
-              Logout
+              Login
             </Button>
-          )}
-        </Box>
+            <Button
+              fullWidth
+              variant="outlined"
+              color="secondary"
+              sx={{ mt: 1, mb: 2 }}
+              onClick={register}
+            >
+              Register
+            </Button>
+          </Box>
+        ) : (
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            sx={{ mt: 3 }}
+            onClick={logout}
+          >
+            Logout
+          </Button>
+        )}
       </Paper>
 
       {show && <h1>Pani di gal</h1>}
     </Container>
   );
 }
-
-
-
-
 
 
 
