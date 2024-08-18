@@ -15,19 +15,23 @@ export default function Form({setusername}) {
         setSignup(false);
         setLogin(true);
         navigate("/register/");
+
+        console.log(setusername)
     }
 
     function handleLogin() {
         setLogin(false);
         setSignup(true);
         navigate("/register/login");
+
+        //console.log(setusername)
     }
 
     return (
         <div style={{ textAlign: "center", marginTop: "10px" }}>
             <Routes>
                 <Route path="/" element={<Signup3 setusername={setusername}/>} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login  setusername={setusername}/>} />
             </Routes>
 
             {signup && (
@@ -68,6 +72,9 @@ const buttonStyle = {
 buttonStyle['&:hover'] = {
     backgroundColor: "#FFB600" // Darker shade of yellow on hover
 };
+
+
+
 
 
 

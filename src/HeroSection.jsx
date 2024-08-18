@@ -75,7 +75,7 @@ const professions = [
   },
 ];
 
-export default function HeroSection({useremail}) {
+export default function HeroSection({username}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -86,16 +86,21 @@ export default function HeroSection({useremail}) {
 
      function Click() {
 
-   //  console.log(useremail)
+   
 
-     if(useremail != undefined){
+     // navigate('/jobs')
 
-      navigate('/post')
+     console.log(username)
 
-     }else{
+    if(username != null){
 
-      navigate('/register')
+     navigate('/jobs')
 
+    }
+
+     else {
+
+     navigate('/register')
 
 
      }

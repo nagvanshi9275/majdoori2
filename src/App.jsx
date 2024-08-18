@@ -37,24 +37,29 @@ function App() {
 
   const[useremail, setuseremail] = useState()
 
+  const[username, setusername] = useState(null)
+
   return (
     <Router>
       <Navbar />
       <Routes>
         
-        <Route path="/register*" element={<Form setuseremail={setuseremail} />} />
+        <Route path="/register*" element={<Form setusername={setusername} />} />
 
 
-        <Route path="/form" element={<Form setuseremail={setuseremail} />} />
+        <Route path="/form" element={<Form setusername={setusername} />} />
 
 
 
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:950197975. */}
-        <Route path="/" element={<Page useremail={useremail} />} />
+        <Route path="/" element={<Page username={username} />} />
 
         <Route path="/post" element={<Post/>}/>
 
         <Route path="/login" element={<Login/>}/>
+
+
+        <Route path="/jobs" element={<Jobs/>}/>
 
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1430100677. */}
         

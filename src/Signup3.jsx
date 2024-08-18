@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Grid, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 
-export default function Signup3() {
+export default function Signup3({setusername}) {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const [name, setName] = useState(""); // Initialize state with empty string
@@ -29,7 +29,13 @@ export default function Signup3() {
       if (response.ok) {
         console.log(data);
         // Navigate to the login page or another page after successful registration
-        navigate("/login");
+      //  navigate("/login");
+
+       console.log(data.name)
+
+       setusername(data.name)
+
+
       } else {
         console.error("Registration failed:", data);
         // Optionally display an error message to the user
@@ -112,3 +118,12 @@ export default function Signup3() {
     </Box>
   );
 }
+
+
+
+
+
+
+
+
+
