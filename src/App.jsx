@@ -59,7 +59,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
 
 
-        <Route path="/jobs" element={<Jobs/>}/>
+        <Route path="/jobs" element={<Post/>}/>
 
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1430100677. */}
         
