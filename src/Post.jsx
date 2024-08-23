@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import {
   TextField,
@@ -12,9 +10,17 @@ import {
   FormControl,
   Card,
   CardContent,
+  Grid,
 } from "@mui/material";
 
-export default function Post() {
+
+import { Route, Routes, useNavigate } from "react-router-dom";
+
+
+export default function Post({ mob, username }) {
+
+  const navigate = useNavigate();
+
   const [jobDetails, setJobDetails] = useState({
     title: "",
     description: "",
@@ -32,7 +38,7 @@ export default function Post() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Add the new job to the jobs array
@@ -45,7 +51,88 @@ export default function Post() {
       location: "",
       salary: "",
     });
+
+    try {
+      const response = await fetch('https://backend-tkha.onrender.com/api/users/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          heading: jobDetails.title,
+          description: jobDetails.description,
+          location: jobDetails.location,
+          salary: jobDetails.salary,
+          phone: mob,
+          name: username
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Successfully posted job ", data);
+      }
+
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
+  async function handleScrollToJobs()  {
+   
+    
+  try{
+
+  const response = await fetch('https://backend-tkha.onrender.com/api/users/Getdata', {
+
+  method: 'POST',
+
+  headers: {
+
+    'Content-Type': 'application/json'
+
+
+  },
+
+  body: JSON.stringify({
+   
+    phone: mob
+
+
+  })
+
+
+
+
+  })
+
+  const data = await response.json()
+
+if(response.ok){
+
+  console.log("see privious jobs", data)
+
+  navigate('/postedjobs')
+
+
+
+}
+
+  } catch(error){
+
+
+  console.log(error.message)
+
+  }
+
+
+
+
+
+
+
+  }
 
   return (
     <Box
@@ -62,7 +149,6 @@ export default function Post() {
         नौकरी पोस्ट करें
       </Typography>
       <form onSubmit={handleSubmit}>
-        {/* Job Title Select */}
         <FormControl fullWidth margin="normal" required>
           <InputLabel id="job-title-label">नौकरी का शीर्षक</InputLabel>
           <Select
@@ -80,7 +166,6 @@ export default function Post() {
           </Select>
         </FormControl>
 
-        {/* Job Description Text Field */}
         <TextField
           label="नौकरी का विवरण"
           variant="outlined"
@@ -94,7 +179,6 @@ export default function Post() {
           required
         />
 
-        {/* Location Text Field */}
         <TextField
           label="स्थान"
           variant="outlined"
@@ -106,7 +190,6 @@ export default function Post() {
           required
         />
 
-        {/* Salary Text Field */}
         <TextField
           label="वेतन"
           variant="outlined"
@@ -119,25 +202,45 @@ export default function Post() {
           required
         />
 
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{
-            marginTop: "20px",
-            backgroundColor: "#FF9800",
-            "&:hover": {
-              backgroundColor: "#E65100",
-            },
-          }}
-        >
-          नौकरी पोस्ट करें
-        </Button>
+        {/* Buttons Section */}
+        <Grid container spacing={2} sx={{ marginTop: "20px" }}>
+          <Grid item xs={12} sm={6}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{
+                backgroundColor: "#FF9800",
+                "&:hover": {
+                  backgroundColor: "#E65100",
+                },
+              }}
+            >
+              नौकरी पोस्ट करें
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              sx={{
+                backgroundColor: "#03A9F4",
+                "&:hover": {
+                  backgroundColor: "#0288D1",
+                },
+              }}
+              onClick={handleScrollToJobs}
+            >
+              पोस्ट की गई नौकरियां
+            </Button>
+          </Grid>
+        </Grid>
       </form>
 
       {/* Display job postings */}
-      <Box sx={{ marginTop: "40px" }}>
+      <Box sx={{ marginTop: "40px" }} id="jobs-section">
         <Typography variant="h5" component="h2" gutterBottom>
           पोस्ट की गई नौकरियां
         </Typography>
@@ -163,11 +266,3 @@ export default function Post() {
     </Box>
   );
 }
-
-
-
-
-
-
-
-

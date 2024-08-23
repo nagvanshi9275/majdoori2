@@ -32,6 +32,8 @@ import Form from "./Form";
 
 import Login from "./Login";
 
+import Postedjobs from "./Postedjob";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -39,12 +41,14 @@ function App() {
 
   const[username, setusername] = useState(null)
 
+  const[mob, setmob] = useState(null)
+
   return (
     <Router>
       <Navbar />
       <Routes>
         
-        <Route path="/register*" element={<Form setusername={setusername} />} />
+        <Route path="/register*" element={<Form setusername={setusername} setmob={setmob}/>} />
 
 
         <Route path="/form" element={<Form setusername={setusername} />} />
@@ -54,16 +58,17 @@ function App() {
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:950197975. */}
         <Route path="/" element={<Page username={username} />} />
 
-        <Route path="/post" element={<Post/>}/>
+        <Route path="/post" element={<Post mob={mob}/>}/>
 
         <Route path="/login" element={<Login/>}/>
 
 
-        <Route path="/jobs" element={<Post/>}/>
+        <Route path="/jobs" element={<Post mob={mob} username={username}/>}/>
 
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1430100677. */}
         
-
+<Route path="/postedjobs" element={<Postedjobs mob={mob}/>}/>
+    
         
       </Routes>
     

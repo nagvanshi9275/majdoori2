@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Box, Typography } from "@mui/material";
 
-export default function Login({setusername}) {
+export default function Login({setusername, setmob}) {
   const [phone, setPhone] = useState(""); // State for phone number
   const [password, setPassword] = useState(""); // State for password
 
@@ -27,6 +27,8 @@ export default function Login({setusername}) {
         // Handle successful login, e.g., navigate to a different page
 
     setusername(data.name)
+
+    setmob(data.phone)
 
       } else {
         console.error("Login failed:", data);

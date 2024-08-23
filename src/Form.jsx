@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Signup3 from "./Signup3";
 import Login from "./Login";
 
-export default function Form({setusername}) {
+export default function Form({setusername, setmob}) {
     const [login, setLogin] = React.useState(true);
     const [signup, setSignup] = React.useState(false);
     const navigate = useNavigate();
@@ -30,8 +30,8 @@ export default function Form({setusername}) {
     return (
         <div style={{ textAlign: "center", marginTop: "10px" }}>
             <Routes>
-                <Route path="/" element={<Signup3 setusername={setusername}/>} />
-                <Route path="/login" element={<Login  setusername={setusername}/>} />
+                <Route path="/" element={<Signup3 setusername={setusername} setmob={setmob}/>} />
+                <Route path="/login" element={<Login  setusername={setusername} setmob={setmob}/>} />
             </Routes>
 
             {signup && (
