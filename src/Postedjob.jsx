@@ -37,7 +37,7 @@ export default function Postedjobs({ mob }) {
         <Grid item xs={12} sm={6} md={4} key={locIndex}>
           <Card sx={{ maxWidth: 345, mb: 2 }}>
             <CardHeader
-              title={job.name}
+              
               subheader={`स्थान: ${location}`}
             />
             <CardContent>

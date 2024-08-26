@@ -3,7 +3,6 @@
 import React from 'react';
 import { Box, Container, Grid, Typography, Button, useTheme, useMediaQuery, Card, CardContent, CardMedia } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
 import { useNavigate } from 'react-router-dom';
 
 const HeroContainer = styled(Container)(({ theme }) => ({
@@ -39,18 +38,26 @@ const HeroContent = styled(Box)(({ theme }) => ({
 const ProfessionCard = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 300,
+  minHeight: 320, // Ensure all cards have the same minimum height
+  display: 'flex',
+  flexDirection: 'column', // Ensure that content inside card is vertically aligned
+  justifyContent: 'space-between', // Distribute space evenly between elements
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
   margin: theme.spacing(2),
-  cursor: 'pointer', // Add pointer cursor
-  transition: 'transform 0.3s ease', // Add transition for smooth animation
+  cursor: 'pointer',
+  transition: 'transform 0.3s ease',
   '&:hover': {
-    transform: 'scale(1.05)', // Scale up effect on hover
+    transform: 'scale(1.05)',
   },
   [theme.breakpoints.down('sm')]: {
     maxWidth: '100%',
     margin: theme.spacing(1),
   },
 }));
+
+const ProfessionCardContent = styled(CardContent)({
+  flexGrow: 1, // Ensure the content takes up available space
+});
 
 const professions = [
   {
@@ -60,7 +67,7 @@ const professions = [
   },
   {
     title: 'राजमिस्त्री',
-    description: 'मजबूत और टिकाऊ इमारतें बनाने में कुशल। yuva youth',
+    description: 'मजबूत और टिकाऊ इमारतें बनाने में कुशल।',
     image: 'https://i.postimg.cc/xjG55MKt/constructon1.jpg',
   },
   {
@@ -70,49 +77,44 @@ const professions = [
   },
   {
     title: 'प्लम्बर',
-    description: 'विश्वसनीय और तेज़ प्लंबिंग सेवाएं। or products ghar baithe',
+    description: 'विश्वसनीय और तेज़ प्लंबिंग सेवाएं।',
     image: 'https://i.postimg.cc/rFfJQGt1/plumber.jpg',
   },
 ];
 
-export default function HeroSection({username}) {
+export default function HeroSection({ username }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-
   const navigate = useNavigate();
 
- // const useremal = useremail;
+  function handlePostJobClick() {
+    if (username != null) {
+      navigate('/jobs');
+    } else {
+      navigate('/register');
+    }
+  }
 
-     function Click() {
+  function handleFindJobClick() {
+    //navigate('/find-jobs'); // Replace with the actual route for finding jobs
 
-   
-
-     // navigate('/jobs')
-
-     console.log(username)
 
     if(username != null){
 
-     navigate('/jobs')
+      navigate('/findjobs');
+
+
+
+    } else {
+
+    navigate('/register')
 
     }
 
-     else {
-
-     navigate('/register')
-
-
-     }
-
-
-      
-     }
 
 
 
-
-
+  }
 
   return (
     <HeroContainer maxWidth={false}>
@@ -124,7 +126,7 @@ export default function HeroSection({username}) {
               मजदूरी में आपका स्वागत है
             </Typography>
             <Typography variant="h5" component="p" gutterBottom>
-              ग्रामीण श्रमिकों को अवसरों से जोड़ना 
+              ग्रामीण श्रमिकों को अवसरों से जोड़ना
             </Typography>
           </Grid>
 
@@ -140,47 +142,60 @@ export default function HeroSection({username}) {
                       height="140"
                       image={profession.image}
                     />
-                    <CardContent>
+                    <ProfessionCardContent>
                       <Typography variant="h6" component="h3" gutterBottom>
                         {profession.title}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
                         {profession.description}
                       </Typography>
-                    </CardContent>
+                    </ProfessionCardContent>
                   </ProfessionCard>
                 </Grid>
               ))}
             </Grid>
           </Grid>
 
-          {/* Call-to-Action Button for Employers */}
-          <Grid item>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              
-              onClick={Click}
-
-
-              sx={{
-                mt: 4,
-                padding: '12px 24px',
-                fontWeight: 'bold',
-
-                
-
-
-                borderWidth: 2,
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                },
-              }}
-            
-            >
-              नौकरियाँ पोस्ट करें
-            </Button>
+          {/* Call-to-Action Buttons */}
+          <Grid item container direction={isMobile ? 'column' : 'row'} spacing={2} justifyContent="center">
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                onClick={handlePostJobClick}
+                sx={{
+                  mt: 4,
+                  padding: '12px 24px',
+                  fontWeight: 'bold',
+                  borderWidth: 2,
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  },
+                }}
+              >
+                नौकरियाँ पोस्ट करें
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="large"
+                onClick={handleFindJobClick}
+                sx={{
+                  mt: 4,
+                  padding: '12px 24px',
+                  fontWeight: 'bold',
+                  borderWidth: 2,
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  },
+                }}
+              >
+                नौकरी ढूंढें
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </HeroContent>

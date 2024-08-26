@@ -34,6 +34,8 @@ import Login from "./Login";
 
 import Postedjobs from "./Postedjob";
 
+import Findjobs from "./Findjobs";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -68,6 +70,8 @@ function App() {
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1430100677. */}
         
 <Route path="/postedjobs" element={<Postedjobs mob={mob}/>}/>
+
+<Route path="/findjobs" element={<Findjobs mob={mob} username={username}/>}/>
     
         
       </Routes>
