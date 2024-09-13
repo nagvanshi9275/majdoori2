@@ -62,7 +62,7 @@ export default function Post({ mob, username }) {
           heading: jobDetails.title,
           description: jobDetails.description,
           location: jobDetails.location,
-          salary: jobDetails.salary,
+          sallary: jobDetails.salary,
           phone: mob,
           name: username
         })
@@ -72,6 +72,9 @@ export default function Post({ mob, username }) {
 
       if (response.ok) {
         console.log("Successfully posted job ", data);
+
+       console.log(jobDetails.salary)
+
       }
 
     } catch (error) {
@@ -159,10 +162,10 @@ if(response.ok){
             onChange={handleChange}
             variant="outlined"
           >
-            <MenuItem value="Construction">निर्माण</MenuItem>
-            <MenuItem value="Electrician">इलेक्ट्रीशियन</MenuItem>
-            <MenuItem value="Plumber">प्लंबर</MenuItem>
-            <MenuItem value="Carpenter">बढ़ई</MenuItem>
+            <MenuItem value="निर्माण">निर्माण</MenuItem>
+            <MenuItem value="इलेक्ट्रीशियन">इलेक्ट्रीशियन</MenuItem>
+            <MenuItem value="प्लंबर">प्लंबर</MenuItem>
+            <MenuItem value="बढ़ई">बढ़ई</MenuItem>
           </Select>
         </FormControl>
 
@@ -266,3 +269,32 @@ if(response.ok){
     </Box>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

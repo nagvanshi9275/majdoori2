@@ -1,13 +1,18 @@
 import React from 'react';
 import { Container, Grid, Typography, TextField, Button, FormControl, InputLabel, MenuItem, Select, Box } from '@mui/material';
 
-export default function Findjobs({ username, mob }) {
+import { useNavigate } from "react-router-dom";
+
+import Getjobs from "./Getjobs"
+
+export default function Findjobs({ username, mob , setheading}) {
   const [profession, setProfession] = React.useState('');
   const [place, setPlace] = React.useState('');
   const [experience, setExperience] = React.useState('');
   const [age, setAge] = React.useState('');
   const [mobileNumber, setMobileNumber] = React.useState(mob);
 
+  const navigate = useNavigate(); 
   // Check if all required fields are filled
   const isFormValid = profession && place && experience && age && mobileNumber;
 
@@ -65,6 +70,10 @@ export default function Findjobs({ username, mob }) {
       if(response.ok){
 
         console.log("congralatuion")
+
+        setheading(profession)
+
+        navigate('/Getjobs')
 
 
       } 

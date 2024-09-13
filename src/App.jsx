@@ -36,6 +36,8 @@ import Postedjobs from "./Postedjob";
 
 import Findjobs from "./Findjobs";
 
+import Getjobs  from "./Getjobs";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -44,6 +46,8 @@ function App() {
   const[username, setusername] = useState(null)
 
   const[mob, setmob] = useState(null)
+
+  const[heading, setheading] = useState(null)
 
   return (
     <Router>
@@ -71,9 +75,13 @@ function App() {
         
 <Route path="/postedjobs" element={<Postedjobs mob={mob}/>}/>
 
-<Route path="/findjobs" element={<Findjobs mob={mob} username={username}/>}/>
+<Route path="/findjobs" element={<Findjobs mob={mob} username={username} setheading={setheading}/>}/>
     
-        
+
+<Route path="/Getjobs" element={<Getjobs heading={heading} mob={mob} />}/>
+
+
+
       </Routes>
     
     
