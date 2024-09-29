@@ -38,6 +38,8 @@ import Findjobs from "./Findjobs";
 
 import Getjobs  from "./Getjobs";
 
+import Talent from "./Talent";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -48,6 +50,11 @@ function App() {
   const[mob, setmob] = useState(null)
 
   const[heading, setheading] = useState(null)
+
+ const[title, settitle] = useState('')
+
+  const[jobnaam, setjobnaam] = useState("")
+
 
   return (
     <Router>
@@ -64,12 +71,12 @@ function App() {
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:950197975. */}
         <Route path="/" element={<Page username={username} />} />
 
-        <Route path="/post" element={<Post mob={mob}/>}/>
+        <Route path="/post" element={<Post mob={mob} />}/>
 
         <Route path="/login" element={<Login/>}/>
 
 
-        <Route path="/jobs" element={<Post mob={mob} username={username}/>}/>
+        <Route path="/jobs" element={<Post mob={mob} username={username} settitle={settitle} />}/>
 
 {/* Suggested code may be subject to a license. Learn more: ~LicenseLog:1430100677. */}
         
@@ -80,7 +87,7 @@ function App() {
 
 <Route path="/Getjobs" element={<Getjobs heading={heading} mob={mob} />}/>
 
-
+<Route path="/findtalent" element={<Talent mob={mob} title={title}/>}/>
 
       </Routes>
     

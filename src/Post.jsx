@@ -17,7 +17,7 @@ import {
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 
-export default function Post({ mob, username }) {
+export default function Post({ mob, username, settitle }) {
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function Post({ mob, username }) {
       location: "",
       salary: "",
     });
-
+    //settitle(jobDetails.title)
     try {
       const response = await fetch('https://backend-tkha.onrender.com/api/users/jobs', {
         method: 'POST',
@@ -73,13 +73,58 @@ export default function Post({ mob, username }) {
       if (response.ok) {
         console.log("Successfully posted job ", data);
 
-       console.log(jobDetails.salary)
+    //  console.log(data.title)
 
       }
+   
+      const tanelentresponse = await fetch('https://backend-tkha.onrender.com/api/users/talent', {
+      
+      method: 'POST',
+
+      headers: {
+
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({
+        phone: mob, // Assuming phone is used for talent API as well
+        profession: jobDetails.title
+      }),
+     
+
+
+
+      })
+
+
+      const talentData = await tanelentresponse.json();
+
+      if (tanelentresponse.ok) {
+        console.log("Talents fetched successfully:", talentData);
+
+        navigate('/findtalent')
+
+     //  console.log(talentData.filterjobs[0].phone)
+
+       //console.log(settitle)
+
+        
+        
+      } else {
+        console.error("Failed to fetch talents:", talentData.message);
+      }
+
 
     } catch (error) {
       console.log(error.message);
     }
+
+
+     settitle(jobDetails.title)
+
+     console.log(settitle)
+
+
   };
 
   async function handleScrollToJobs()  {
