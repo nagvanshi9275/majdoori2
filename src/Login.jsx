@@ -7,7 +7,7 @@ import { TextField, Button, Grid, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Login({setusername, setmob}) {
+export default function Login({setusername, setmob, setprofile}) {
   const [phone, setPhone] = useState(""); // State for phone number
   const [password, setPassword] = useState(""); // State for password
 
@@ -36,6 +36,8 @@ export default function Login({setusername, setmob}) {
     setusername(data.name)
 
     setmob(data.phone)
+
+    setprofile(true)
 
     navigate('/')
 

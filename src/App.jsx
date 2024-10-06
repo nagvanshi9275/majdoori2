@@ -40,6 +40,8 @@ import Getjobs  from "./Getjobs";
 
 import Talent from "./Talent";
 
+import Profile from "./Profile";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -56,12 +58,15 @@ function App() {
   const[jobnaam, setjobnaam] = useState("")
 
 
+  const[profile, setprofile] = useState(false);
+
+
   return (
     <Router>
-      <Navbar />
+      <Navbar profile={profile} />
       <Routes>
         
-        <Route path="/register*" element={<Form setusername={setusername} setmob={setmob}/>} />
+        <Route path="/register*" element={<Form setusername={setusername} setmob={setmob} setprofile={setprofile}/>} />
 
 
         <Route path="/form" element={<Form setusername={setusername} />} />
@@ -88,6 +93,10 @@ function App() {
 <Route path="/Getjobs" element={<Getjobs heading={heading} mob={mob} />}/>
 
 <Route path="/findtalent" element={<Talent mob={mob} title={title}/>}/>
+
+
+<Route path="/profile" element={<Profile username={username} mob={mob} />}/>
+
 
       </Routes>
     

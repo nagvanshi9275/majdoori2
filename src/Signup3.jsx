@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Grid, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 
-export default function Signup3({setusername, setmob}) {
+export default function Signup3({setusername, setmob, setprofile}) {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const [name, setName] = useState(""); // Initialize state with empty string
@@ -36,6 +36,8 @@ export default function Signup3({setusername, setmob}) {
        setusername(data.name)
 
        setmob(data.phone)
+
+       setprofile(true)
 
        navigate('/')
 

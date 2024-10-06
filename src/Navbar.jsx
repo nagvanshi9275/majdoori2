@@ -1,6 +1,4 @@
 
-
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -10,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle'; // Import profile icon
 import { styled, alpha } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -57,27 +56,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({ profile }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width:600px)');
 
   // Update menu items
   const menuItems = [
     { text: 'होम', path: '/' },
-    { text: 'लॉगिन', path: '/register' },
     { text: 'हमारे बारे में', path: '/about' },
     { text: 'संपर्क', path: '/contact' },
   ];
 
   const toggleDrawer = (open) => (event) => {
-    // Prevent drawer from closing if click event originates from the input field
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    if (event.type === 'click' && event.target.closest('.MuiInputBase-root')) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setDrawerOpen(open);
@@ -113,6 +104,16 @@ export default function Navbar() {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+        <ListItem
+          button
+          component={Link}
+          to={profile ? '/profile' : '/register'} // Link to profile if logged in, else login
+          sx={{ backgroundColor: '#FFF', color: '#000' }}
+        >
+          <ListItemText
+            primary={profile ? <AccountCircle sx={{ color: '#000' }} /> : 'लॉगिन'}
+          />
+        </ListItem>
       </List>
     </Box>
   );
@@ -168,6 +169,13 @@ export default function Navbar() {
                   {item.text}
                 </Typography>
               ))}
+              <IconButton
+                component={Link}
+                to={profile ? '/profile' : '/register'}
+                sx={{ color: '#FFF8E1' }} // Cream color for profile/login button
+              >
+                {profile ? <AccountCircle /> : 'लॉगिन'}
+              </IconButton>
             </>
           )}
         </Toolbar>
@@ -178,14 +186,6 @@ export default function Navbar() {
     </>
   );
 }
-
-
-
-
-
-
-
-
 
 
 
