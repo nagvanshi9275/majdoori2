@@ -61,11 +61,11 @@ const ButtonContainer = styled(Box)({
 export default function Profile({ username, mob }) {
   const initialData = {
     phone: mob,
-    name: "राम सिंह",
+    name: username,
     district: "औरंगाबाद",
     state: "बिहार",
     skill: "",
-    dihari: "",
+    dihari: ""
   };
 
   const [userData, setUserData] = useState(initialData);
