@@ -77,7 +77,7 @@ export default function Post({ mob, username, settitle }) {
 
       }
    
-      const tanelentresponse = await fetch('https://backend-tkha.onrender.com/api/users/talent', {
+      const tanelentresponse = await fetch('http://localhost:4000/api/users/talent', {
       
       method: 'POST',
 

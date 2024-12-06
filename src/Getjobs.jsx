@@ -7,6 +7,8 @@ import { Work, LocationOn, AttachMoney, Person, Phone } from '@mui/icons-materia
 export default function GetJobs({ heading, mob }) {
   const [majdoori, setMajdoori] = useState([]); // State to store job data
 
+  const[apply1, setapply1] = useState([])
+
   useEffect(() => {
     async function fetchJobs() {
       try {
@@ -36,6 +38,91 @@ export default function GetJobs({ heading, mob }) {
 
     fetchJobs();
   }, [mob, heading]); // Use props directly as dependencies
+
+
+  async function Apply(){
+
+ // console.log("apply")
+
+
+//console.log(mob)
+
+try {
+      
+  const response = await fetch('http://localhost:4000/api/users/wkapply', {
+
+
+  method: "POST",
+
+  headers: {
+   "Content-Type": "application/json",
+
+  },
+
+  body:  JSON.stringify({
+
+   "phone": mob
+
+  })
+
+
+
+
+
+
+  })
+
+const data = await response.json()
+
+if(response.ok){
+
+//console.log("thus le data", data)
+
+
+
+
+
+//console.log(raya)
+
+
+
+//console.log(profileImage)
+
+console.log("ho gya ye rhe applicant", data)
+
+setapply1([data])
+
+
+}
+
+
+
+  } catch (error) {
+
+   console.log(error.message)
+   
+  }
+
+
+
+
+
+
+
+
+
+  }
+
+
+ useEffect(() => {
+
+  console.log(apply1)
+
+ }, [apply1])
+
+
+
+
 
   return (
     <Container sx={{ py: 4 }}>
@@ -136,7 +223,7 @@ export default function GetJobs({ heading, mob }) {
 
                   {/* Action Button */}
                   <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-                    <Button size="small" color="primary" variant="contained">
+                    <Button onClick={Apply} size="small" color="primary" variant="contained">
                       Apply Now
                     </Button>
                   </CardActions>

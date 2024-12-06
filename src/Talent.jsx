@@ -14,7 +14,7 @@ export default function Talent({ mob, title }) {
   const fetchTalents = async () => {
     try {
       setLoading(true); // Start loading when the request is initiated
-      const response = await fetch('https://backend-tkha.onrender.com/api/users/talent', {
+      const response = await fetch('http://localhost:4000/api/users/talent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -63,7 +63,7 @@ export default function Profile({ username, mob }) {
     phone: mob,
     name: username,
     district: "औरंगाबाद",
-    state: "बिहार",
+    state: "बिहार3",
     skill: "",
     dihari: ""
   };
@@ -71,6 +71,25 @@ export default function Profile({ username, mob }) {
   const [userData, setUserData] = useState(initialData);
   const [editMode, setEditMode] = useState(false);
   const [profileImage, setProfileImage] = useState(null); // Store profile image
+  const[district, setdistrict] = useState("")
+
+  const[photo, setphoto] = useState(null)
+
+  const[raya, setrajya] = useState([])
+
+  const[rajya1, setrajya1] = useState(false)
+
+
+
+
+
+  useEffect(() => {
+
+ // console.log(raya)
+
+
+  }, [raya])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,6 +102,73 @@ export default function Profile({ username, mob }) {
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
+
+
+    async function fetchchanges() {
+
+     try {
+      
+     const response = await fetch('http://localhost:4000/api/users/prfetch', {
+
+
+     method: "POST",
+
+     headers: {
+      "Content-Type": "application/json",
+
+     },
+
+     body:  JSON.stringify({
+
+      "phone": userData.phone
+
+     })
+
+
+
+
+
+
+     })
+
+const data = await response.json()
+
+if(response.ok){
+
+//console.log("thus le data", data)
+
+setrajya([data])
+
+setrajya1(true)
+
+//console.log(raya)
+
+setphoto(data.profilepic)
+
+console.log(profileImage)
+
+
+}
+
+
+
+     } catch (error) {
+
+      console.log(error.message)
+      
+     }
+
+
+
+
+
+      
+    }
+
+
+
+
+
 
   async function saveChanges() {
     toggleEditMode();
@@ -133,13 +219,32 @@ export default function Profile({ username, mob }) {
       };
       reader.readAsDataURL(file);
     }
+
+  console.log(profileImage)  // added the profileimage
+
+  saveChanges()
+
+  fetchchanges()
+
   };
+
+  fetchchanges()
+
+// Add this useEffect to log the profileImage whenever it changes
+useEffect(() => {
+  console.log("Profile image updated:", profileImage);
+
+
+}, [profileImage]);
+
+
+
 
   return (
     <ProfileContainer elevation={3}>
       <AvatarContainer>
-        <Avatar sx={{ width: 100, height: 100, backgroundColor: "#3E2723" }} src={profileImage}>
-          {!profileImage && <PersonIcon sx={{ fontSize: 60, color: "#FFEB3B" }} />}
+        <Avatar sx={{ width: 100, height: 100, backgroundColor: "#3E2723" }} src={photo}>
+          {!photo && <PersonIcon sx={{ fontSize: 60, color: "#FFEB3B" }} />}
         </Avatar>
         <label htmlFor="avatar-upload">
           <AvatarInput
@@ -238,16 +343,32 @@ export default function Profile({ username, mob }) {
             <strong>मोबाइल:</strong> {userData.phone}
           </Typography>
           <Typography variant="body1" align="center" sx={{ color: "#5D4037", marginTop: "10px" }}>
-            <strong>जिला:</strong> {userData.district}
+            <strong>जिला:</strong> {raya.length > 0 ? raya[0].District : userData.district    }
           </Typography>
           <Typography variant="body1" align="center" sx={{ color: "#5D4037", marginTop: "10px" }}>
-            <strong>राज्य:</strong> {userData.state}
+            <strong>राज्य:</strong>
+            
+            
+             {
+
+raya.length > 0 ? raya[0].state : userData.state            
+          
+            
+            
+            }
           </Typography>
           <Typography variant="body1" align="center" sx={{ color: "#5D4037", marginTop: "10px" }}>
-            <strong>कौशल:</strong> {userData.skill || "नहीं चुना गया"}
+            <strong>कौशल:</strong> {raya.length > 0 ? raya[0].skills : userData.skill     || "नहीं चुना गया"}
+
+            {/* changes the skills to skill*/}
           </Typography>
           <Typography variant="body1" align="center" sx={{ color: "#5D4037", marginTop: "10px" }}>
-            <strong>दिहाड़ी:</strong> {userData.dihari || "नहीं भरी गई"}
+            <strong>दिहाड़ी:</strong> {raya.length > 0 ? raya[0].Dihari : userData.dihari 
+            
+            
+          }
+
+          {/* here we have changed the Dihari to dihari*/}
           </Typography>
         </Box>
       )}
